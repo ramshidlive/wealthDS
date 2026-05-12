@@ -5,6 +5,7 @@
 library;
 
 export 'ds/tokens.dart';
+export 'tokens/tokens.dart';
 export 'components/stat_box.dart';
 export 'components/status_pill.dart';
 export 'components/asset_list_item.dart';

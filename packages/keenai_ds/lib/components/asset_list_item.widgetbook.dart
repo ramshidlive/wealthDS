@@ -3,6 +3,8 @@ import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 import '../ds/asset_list_item.dart';
+import '../ds/status_pill.dart';
+import '../tokens/tokens.dart';
 
 @UseCase(
   name: 'Playground',
@@ -30,9 +32,26 @@ Widget dsAssetListItemPlayground(BuildContext context) {
     label: 'showOrderType',
     initialValue: false,
   );
-  final showStatusPill = context.knobs.boolean(
-    label: 'showStatusPill',
+  final orderTypeLabel = context.knobs.string(
+    label: 'orderTypeLabel',
+    initialValue: 'S',
+  );
+  final orderTypeTone = context.knobs.object.dropdown<DsStatusPillTone>(
+    label: 'orderTypeTone',
+    options: const [
+      DsStatusPillTone.danger,
+      DsStatusPillTone.success,
+    ],
+    initialOption: DsStatusPillTone.danger,
+    labelBuilder: (v) => v.name,
+  );
+  final showOrderStatus = context.knobs.boolean(
+    label: 'showOrderStatus',
     initialValue: false,
+  );
+  final orderStatus = context.knobs.string(
+    label: 'orderStatus',
+    initialValue: 'FAILED',
   );
   final showValue = context.knobs.boolean(
     label: 'showValue',
@@ -86,17 +105,20 @@ Widget dsAssetListItemPlayground(BuildContext context) {
   );
 
   return ColoredBox(
-    color: const Color(0xFFE5E5E5),
+    color: KeenaiColorsBorder.medium,
     child: Center(
       child: ColoredBox(
-        color: const Color(0xFFFFFFFF),
+        color: KeenaiColorsSurface.white,
         child: DsAssetListItem(
           title: title,
           assetTagLabel: assetTagLabel,
           showAssetTag: showAssetTag,
           showChevron: showChevron,
           showOrderType: showOrderType,
-          showStatusPill: showStatusPill,
+          showOrderStatus: showOrderStatus,
+          orderTypeLabel: orderTypeLabel,
+          orderTypeTone: orderTypeTone,
+          orderStatus: orderStatus,
           showValue: showValue,
           valueText: valueText,
           trailing: trailing,

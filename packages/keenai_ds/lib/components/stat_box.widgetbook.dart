@@ -3,6 +3,7 @@ import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 import '../ds/stat_box.dart';
+import '../tokens/tokens.dart';
 
 @UseCase(
   name: 'Playground',
@@ -54,7 +55,7 @@ Widget dsStatBoxPlayground(BuildContext context) {
   );
 
   return ColoredBox(
-    color: const Color(0xFFE5E5E5),
+    color: KeenaiColorsBorder.medium,
     child: Center(
       child: DsStatBox(
         label: label,

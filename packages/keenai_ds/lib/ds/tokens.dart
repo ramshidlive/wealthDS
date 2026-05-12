@@ -1,155 +1,88 @@
 import 'package:flutter/painting.dart';
 
-/// Design tokens aligned with Wealth mobile `styles.css` (:root).
+import '../tokens/tokens.dart';
+
+/// Legacy semantic aliases — values match `tokens.json` via [KeenaiColorsText],
+/// [KeenaiColorsBorder], etc.
 abstract final class DsColors {
-  static const Color textMain = Color(0xFF111E2E);
-  static const Color textMuted = Color(0xFF828A96);
-  static const Color textGreen = Color(0xFF04B08D);
-  static const Color textRed = Color(0xFFE31937);
+  static const Color textMain = KeenaiColorsText.main;
+  static const Color textMuted = KeenaiColorsText.muted;
+  static const Color textGreen = KeenaiColorsText.green;
+  static const Color textRed = KeenaiColorsText.red;
 
-  /// Surfaces for StatusPill (Figma / `styles.css` tokens).
-  static const Color surfacePink = Color(0xFFFEF6F7);
-  static const Color surfaceTeal = Color(0xFFEBF9F6);
-  static const Color surfaceBg = Color(0xFFF5F6F7);
+  static const Color surfacePink = KeenaiColorsSurface.pink;
+  static const Color surfaceTeal = KeenaiColorsSurface.teal;
+  static const Color surfaceBg = KeenaiColorsSurface.bg;
 
-  /// Dividers / list borders (Figma `--border/light`).
-  static const Color borderLight = Color(0xFFEBEDF0);
+  static const Color borderLight = KeenaiColorsBorder.light;
+  static const Color borderStrong = KeenaiColorsBorder.strong;
 
-  /// Strong border — chips, emphasis outlines (Figma `--border/strong`).
-  static const Color borderStrong = Color(0xFFCED1D9);
+  static const Color surfaceWhite = KeenaiColorsSurface.white;
 
-  static const Color surfaceWhite = Color(0xFFFFFFFF);
+  static const Color bannerInfoBg = KeenaiColorsSurface.card;
+  static const Color bannerWarningBg = KeenaiColorsBanner.warningBg;
+  static const Color bannerSuccessBg = KeenaiColorsBanner.successBg;
+  static const Color bannerDangerBg = KeenaiColorsBanner.dangerBg;
 
-  // InfoBanner (Figma `10:22`).
-  static const Color bannerInfoBg = Color(0xFFFAFBFC);
-  static const Color bannerWarningBg = Color(0xFFFFF8EC);
-  static const Color bannerSuccessBg = Color(0xFFEFFBF6);
-  static const Color bannerDangerBg = Color(0xFFFFF4F6);
+  static const Color bannerWarningBorder = KeenaiColorsBanner.warningBorder;
+  static const Color bannerSuccessBorder = KeenaiColorsBanner.successBorder;
+  static const Color bannerDangerBorder = KeenaiColorsBanner.dangerBorder;
 
-  static const Color bannerWarningBorder = Color(0xFFF2D49F);
-  static const Color bannerSuccessBorder = Color(0xFFBCE8DA);
-  static const Color bannerDangerBorder = Color(0xFFF6C8D1);
-
-  static const Color bannerWarningText = Color(0xFF9A6506);
-  static const Color bannerSuccessText = Color(0xFF0F7E63);
-  static const Color bannerDangerText = Color(0xFFB8132D);
+  static const Color bannerWarningText = KeenaiColorsBanner.warningText;
+  static const Color bannerSuccessText = KeenaiColorsBanner.successText;
+  static const Color bannerDangerText = KeenaiColorsBanner.dangerText;
 }
 
+/// Legacy semantic text styles — built from [KeenaiTypographyBody] / [KeenaiTypographyDisplay].
 abstract final class DsTypography {
-  /// 12 / 16 — labels, supporting body.
-  static TextStyle get t12 => const TextStyle(
-        fontSize: 12,
-        height: 16 / 12,
-        fontWeight: FontWeight.w400,
-        color: DsColors.textMain,
+  static TextStyle get t12 => KeenaiTypographyBody.body12Regular.copyWith(
+        color: KeenaiColorsText.main,
       );
 
-  /// 14 / 20 — StatBox small value.
-  static TextStyle get t14Value => TextStyle(
-        fontSize: 14,
-        height: 20 / 14,
-        fontWeight: FontWeight.w500,
-        color: DsColors.textMain,
-        letterSpacing: -0.0125 * 14,
+  static TextStyle get t14Value => KeenaiTypographyBody.body14Medium.copyWith(
+        color: KeenaiColorsText.main,
       );
 
-  /// 16 / 22 — StatBox medium value.
-  static TextStyle get t16Value => TextStyle(
-        fontSize: 16,
-        height: 22 / 16,
-        fontWeight: FontWeight.w600,
-        color: DsColors.textMain,
-        letterSpacing: -0.0125 * 16,
+  static TextStyle get t16Value => KeenaiTypographyBody.body16Semibold.copyWith(
+        color: KeenaiColorsText.main,
       );
 
-  /// 26 / 32 — StatBox large value.
-  static TextStyle get t26Value => TextStyle(
-        fontSize: 26,
-        height: 32 / 26,
-        fontWeight: FontWeight.w500,
-        color: DsColors.textMain,
-        letterSpacing: -0.012 * 26,
+  static TextStyle get t26Value => KeenaiTypographyDisplay.display26Medium.copyWith(
+        color: KeenaiColorsText.main,
       );
 
   static TextStyle labelMuted(TextStyle base) =>
-      base.copyWith(color: DsColors.textMuted);
+      base.copyWith(color: KeenaiColorsText.muted);
 
-  /// StatusPill MD — Body/12 Medium (Figma node 9:14).
-  static TextStyle get statusPillMd => const TextStyle(
-        fontSize: 12,
-        height: 16 / 12,
-        fontWeight: FontWeight.w500,
+  static TextStyle get statusPillMd => KeenaiTypographyBody.body12Medium;
+
+  static TextStyle get statusPillSm => KeenaiTypographyBody.body10Semibold;
+
+  static TextStyle get assetListTitle => KeenaiTypographyBody.body14Medium.copyWith(
+        color: KeenaiColorsText.main,
       );
 
-  /// StatusPill SM — Body/10 SemiBold.
-  static TextStyle get statusPillSm => const TextStyle(
-        fontSize: 10,
-        height: 14 / 10,
-        fontWeight: FontWeight.w600,
+  static TextStyle get assetListBodyMuted =>
+      KeenaiTypographyBody.body12Regular.copyWith(
+        color: KeenaiColorsText.muted,
       );
 
-  /// AssetListItem title — Body/14 Medium (Figma `41:98`).
-  static TextStyle get assetListTitle => const TextStyle(
-        fontSize: 14,
-        height: 20 / 14,
-        fontWeight: FontWeight.w500,
-        color: DsColors.textMain,
-        letterSpacing: -0.196,
+  static TextStyle get chipLabelMedium => KeenaiTypographyBody.body12Medium;
+
+  static TextStyle get chipLabelRegular => KeenaiTypographyBody.body12Regular;
+
+  static TextStyle get assetListMetaMuted => KeenaiTypographyBody.body12Medium.copyWith(
+        color: KeenaiColorsText.muted,
       );
 
-  /// Asset tag / secondary line — Body/12 Regular muted.
-  static TextStyle get assetListBodyMuted => const TextStyle(
-        fontSize: 12,
-        height: 16 / 12,
-        fontWeight: FontWeight.w400,
-        color: DsColors.textMuted,
+  static TextStyle get assetListValueBold => KeenaiTypographyBody.body14Semibold.copyWith(
+        color: KeenaiColorsText.main,
       );
 
-  /// Filter chip — Body/12 Medium (Figma `47:2` Chips / selected & multi).
-  static TextStyle get chipLabelMedium => const TextStyle(
-        fontSize: 12,
-        height: 16 / 12,
-        fontWeight: FontWeight.w500,
+  static TextStyle get assetListCurrency => KeenaiTypographyBody.body10Semibold.copyWith(
+        color: KeenaiColorsText.muted,
       );
 
-  /// Filter chip — Body/12 Regular (Figma outlined variant).
-  static TextStyle get chipLabelRegular => const TextStyle(
-        fontSize: 12,
-        height: 16 / 12,
-        fontWeight: FontWeight.w400,
-      );
-
-  /// Meta quantity — Body/12 Medium muted.
-  static TextStyle get assetListMetaMuted => const TextStyle(
-        fontSize: 12,
-        height: 16 / 12,
-        fontWeight: FontWeight.w500,
-        color: DsColors.textMuted,
-      );
-
-  /// Trailing primary value — Body/14 SemiBold.
-  static TextStyle get assetListValueBold => const TextStyle(
-        fontSize: 14,
-        height: 20 / 14,
-        fontWeight: FontWeight.w600,
-        color: DsColors.textMain,
-        letterSpacing: -0.196,
-      );
-
-  /// Trailing currency — 10 SemiBold muted.
-  static TextStyle get assetListCurrency => const TextStyle(
-        fontSize: 10,
-        height: 14 / 10,
-        fontWeight: FontWeight.w600,
-        color: DsColors.textMuted,
-      );
-
-  /// InfoBanner — Body/14 Regular (Figma `10:22`).
-  static TextStyle infoBannerBody(Color color) => TextStyle(
-        fontSize: 14,
-        height: 20 / 14,
-        fontWeight: FontWeight.w400,
-        color: color,
-        letterSpacing: -0.196,
-      );
+  static TextStyle infoBannerBody(Color color) =>
+      KeenaiTypographyBody.body14Regular.copyWith(color: color);
 }

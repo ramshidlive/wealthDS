@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../ds/tokens.dart';
+import '../tokens/tokens.dart';
 
 /// Visual tone for [DsInfoBanner] — Figma node `10:22` (InfoBanner).
 enum DsInfoBannerTone {
@@ -24,36 +24,36 @@ class DsInfoBanner extends StatelessWidget {
   final String message;
   final DsInfoBannerTone tone;
 
-  static const double _iconSize = 16;
-  static const double _gap = 8;
-  static const EdgeInsets _padding = EdgeInsets.all(12);
-  static const double _radius = 12;
+  static const double _iconSize = KeenaiSpacing.space16;
+  static const double _gap = KeenaiSpacing.space8;
+  static const EdgeInsets _padding = EdgeInsets.all(KeenaiSpacing.space12);
+  static const double _radius = KeenaiRadius.radius12;
 
   (Color bg, Color border, Color foreground) get _palette {
     switch (tone) {
       case DsInfoBannerTone.info:
         return (
-          DsColors.bannerInfoBg,
-          DsColors.borderStrong,
-          DsColors.textMuted,
+          KeenaiColorsSurface.card,
+          KeenaiColorsBorder.strong,
+          KeenaiColorsText.muted,
         );
       case DsInfoBannerTone.warning:
         return (
-          DsColors.bannerWarningBg,
-          DsColors.bannerWarningBorder,
-          DsColors.bannerWarningText,
+          KeenaiColorsBanner.warningBg,
+          KeenaiColorsBanner.warningBorder,
+          KeenaiColorsBanner.warningText,
         );
       case DsInfoBannerTone.success:
         return (
-          DsColors.bannerSuccessBg,
-          DsColors.bannerSuccessBorder,
-          DsColors.bannerSuccessText,
+          KeenaiColorsBanner.successBg,
+          KeenaiColorsBanner.successBorder,
+          KeenaiColorsBanner.successText,
         );
       case DsInfoBannerTone.danger:
         return (
-          DsColors.bannerDangerBg,
-          DsColors.bannerDangerBorder,
-          DsColors.bannerDangerText,
+          KeenaiColorsBanner.dangerBg,
+          KeenaiColorsBanner.dangerBorder,
+          KeenaiColorsBanner.dangerText,
         );
     }
   }
@@ -81,7 +81,7 @@ class DsInfoBanner extends StatelessWidget {
             Expanded(
               child: Text(
                 message,
-                style: DsTypography.infoBannerBody(fg),
+                style: KeenaiTypographyBody.body14Regular.copyWith(color: fg),
               ),
             ),
           ],

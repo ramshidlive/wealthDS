@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import 'tokens.dart';
+import '../tokens/tokens.dart';
 
 /// Horizontal alignment of label, value, and supporting text.
 enum DsStatBoxAlignment {
@@ -64,19 +64,24 @@ class DsStatBox extends StatelessWidget {
   TextStyle get _valueStyle {
     switch (size) {
       case DsStatBoxSize.small:
-        return DsTypography.t14Value;
+        return KeenaiTypographyBody.body14Medium
+            .copyWith(color: KeenaiColorsText.main);
       case DsStatBoxSize.medium:
-        return DsTypography.t16Value;
+        return KeenaiTypographyBody.body16Semibold
+            .copyWith(color: KeenaiColorsText.main);
       case DsStatBoxSize.large:
-        return DsTypography.t26Value;
+        return KeenaiTypographyDisplay.display26Medium
+            .copyWith(color: KeenaiColorsText.main);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final labelStyle = DsTypography.labelMuted(DsTypography.t12);
-    final supportingBodyStyle = DsTypography.t12;
-    final supportingLabelStyle = DsTypography.labelMuted(DsTypography.t12);
+    final labelStyle =
+        KeenaiTypographyBody.body12Regular.copyWith(color: KeenaiColorsText.muted);
+    final supportingBodyStyle = KeenaiTypographyBody.body12Regular;
+    final supportingLabelStyle =
+        KeenaiTypographyBody.body12Regular.copyWith(color: KeenaiColorsText.muted);
 
     final showSupporting =
         supportingText != null && supportingText!.isNotEmpty;
@@ -90,14 +95,14 @@ class DsStatBox extends StatelessWidget {
           textAlign: _textAlign,
           style: labelStyle,
         ),
-        const SizedBox(height: 2),
+        SizedBox(height: KeenaiSpacing.space2),
         Text(
           value,
           textAlign: _textAlign,
           style: _valueStyle,
         ),
         if (showSupporting) ...[
-          const SizedBox(height: 6),
+          SizedBox(height: KeenaiSpacing.space6),
           Text.rich(
             TextSpan(
               style: supportingBodyStyle,

@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import 'tokens.dart';
+import '../tokens/tokens.dart';
 
 /// Figma `StatusPill` size variants (MD / SM).
 enum DsStatusPillSize {
@@ -33,38 +33,44 @@ class DsStatusPill extends StatelessWidget {
   Color get _background {
     switch (tone) {
       case DsStatusPillTone.danger:
-        return DsColors.surfacePink;
+        return KeenaiColorsSurface.pink;
       case DsStatusPillTone.success:
-        return DsColors.surfaceTeal;
+        return KeenaiColorsSurface.teal;
       case DsStatusPillTone.neutral:
-        return DsColors.surfaceBg;
+        return KeenaiColorsSurface.bg;
     }
   }
 
   Color get _foreground {
     switch (tone) {
       case DsStatusPillTone.danger:
-        return DsColors.textRed;
+        return KeenaiColorsText.red;
       case DsStatusPillTone.success:
-        return DsColors.textGreen;
+        return KeenaiColorsText.green;
       case DsStatusPillTone.neutral:
-        return DsColors.textMuted;
+        return KeenaiColorsText.muted;
     }
   }
 
   TextStyle get _textStyle {
     final base = size == DsStatusPillSize.md
-        ? DsTypography.statusPillMd
-        : DsTypography.statusPillSm;
+        ? KeenaiTypographyBody.body12Medium
+        : KeenaiTypographyBody.body10Semibold;
     return base.copyWith(color: _foreground);
   }
 
   EdgeInsets get _padding {
     switch (size) {
       case DsStatusPillSize.md:
-        return const EdgeInsets.symmetric(horizontal: 8, vertical: 6);
+        return const EdgeInsets.symmetric(
+          horizontal: KeenaiSpacing.space8,
+          vertical: KeenaiSpacing.space6,
+        );
       case DsStatusPillSize.sm:
-        return const EdgeInsets.symmetric(horizontal: 8, vertical: 4);
+        return const EdgeInsets.symmetric(
+          horizontal: KeenaiSpacing.space8,
+          vertical: KeenaiSpacing.space4,
+        );
     }
   }
 
@@ -73,7 +79,7 @@ class DsStatusPill extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: _background,
-        borderRadius: BorderRadius.circular(1000),
+        borderRadius: BorderRadius.circular(KeenaiRadius.radius1000),
       ),
       child: Padding(
         padding: _padding,

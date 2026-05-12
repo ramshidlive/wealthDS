@@ -3,6 +3,7 @@ import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 import '../ds/status_pill.dart';
+import '../tokens/tokens.dart';
 
 @UseCase(
   name: 'Playground',
@@ -28,7 +29,7 @@ Widget dsStatusPillPlayground(BuildContext context) {
   );
 
   return ColoredBox(
-    color: const Color(0xFFE5E5E5),
+    color: KeenaiColorsBorder.medium,
     child: Center(
       child: DsStatusPill(
         label: label,

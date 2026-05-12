@@ -38,6 +38,12 @@ jobs:
         run: flutter pub get
         working-directory: packages/keenai_ds
 
+      - name: Verify typography codegen matches tokens.json
+        run: |
+          dart run tool/generate_typography_from_tokens.dart
+          git diff --exit-code lib/tokens/typography_generated.dart
+        working-directory: packages/keenai_ds
+
       - name: Generate Widgetbook metadata
         run: dart run build_runner build -d
         working-directory: packages/keenai_ds

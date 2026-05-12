@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
+import '../tokens/tokens.dart';
 import 'status_pill.dart';
-import 'tokens.dart';
 
 /// Trailing layout for [DsAssetListItem] — Figma `trailing` prop (`41:98`).
 enum DsAssetListItemTrailing {
@@ -23,7 +23,10 @@ class DsAssetListItem extends StatelessWidget {
     this.showAssetTag = true,
     this.showChevron = true,
     this.showOrderType = false,
-    this.showStatusPill = false,
+    this.showOrderStatus = false,
+    this.orderTypeLabel = 'S',
+    this.orderTypeTone = DsStatusPillTone.danger,
+    this.orderStatus = 'FAILED',
     this.showValue = true,
     this.valueText = 'Qty 600',
     this.trailing = DsAssetListItemTrailing.sub,
@@ -40,7 +43,10 @@ class DsAssetListItem extends StatelessWidget {
   final bool showAssetTag;
   final bool showChevron;
   final bool showOrderType;
-  final bool showStatusPill;
+  final bool showOrderStatus;
+  final String orderTypeLabel;
+  final DsStatusPillTone orderTypeTone;
+  final String orderStatus;
   final bool showValue;
   final String? valueText;
   final DsAssetListItemTrailing trailing;
@@ -52,18 +58,18 @@ class DsAssetListItem extends StatelessWidget {
   final int titleMaxLines;
 
   bool get _hasMetaRow =>
-      showOrderType || showStatusPill || (showValue && (valueText?.isNotEmpty ?? false));
+      showOrderType || showOrderStatus || (showValue && (valueText?.isNotEmpty ?? false));
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: const BoxDecoration(
         border: Border(
-          bottom: BorderSide(color: DsColors.borderLight, width: 0.5),
+          bottom: BorderSide(color: KeenaiColorsBorder.light, width: 0.5),
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16),
+        padding: const EdgeInsets.symmetric(vertical: KeenaiSpacing.space16),
         child: SizedBox(
           width: contentWidth,
           child: Row(
@@ -78,14 +84,16 @@ class DsAssetListItem extends StatelessWidget {
                       title: title,
                       assetTagLabel: assetTagLabel,
                       showAssetTag: showAssetTag,
-                      trailing: trailing,
                       titleMaxLines: titleMaxLines,
                     ),
                     if (_hasMetaRow) ...[
-                      const SizedBox(height: 4),
+                      const SizedBox(height: KeenaiSpacing.space4),
                       _MetaRow(
                         showOrderType: showOrderType,
-                        showStatusPill: showStatusPill,
+                        showOrderStatus: showOrderStatus,
+                        orderTypeLabel: orderTypeLabel,
+                        orderTypeTone: orderTypeTone,
+                        orderStatus: orderStatus,
                         showValue: showValue,
                         valueText: valueText,
                       ),
@@ -93,7 +101,7 @@ class DsAssetListItem extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 32),
+              const SizedBox(width: KeenaiSpacing.space32),
               _TrailingBlock(
                 trailing: trailing,
                 showChevron: showChevron,
@@ -115,14 +123,12 @@ class _TitleRow extends StatelessWidget {
     required this.title,
     required this.assetTagLabel,
     required this.showAssetTag,
-    required this.trailing,
     required this.titleMaxLines,
   });
 
   final String title;
   final String assetTagLabel;
   final bool showAssetTag;
-  final DsAssetListItemTrailing trailing;
   final int titleMaxLines;
 
   @override
@@ -132,47 +138,37 @@ class _TitleRow extends StatelessWidget {
       maxLines: titleMaxLines,
       overflow:
           titleMaxLines > 1 ? TextOverflow.visible : TextOverflow.ellipsis,
-      style: DsTypography.assetListTitle,
+      style: KeenaiTypographyBody.body14Medium
+          .copyWith(color: KeenaiColorsText.main),
     );
 
     if (!showAssetTag) {
       return titleText;
     }
 
-    final tag = Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        DecoratedBox(
-          decoration: const BoxDecoration(
-            color: DsColors.textMuted,
-            shape: BoxShape.circle,
-          ),
-          child: const SizedBox(width: 2, height: 2),
-        ),
-        const SizedBox(width: 6),
-        Text(
-          assetTagLabel,
-          style: DsTypography.assetListBodyMuted,
-        ),
-      ],
+    // Interpunct + label use the same line height as the title so alphabetic
+    // baselines line up with `CrossAxisAlignment.baseline` (the old dot Row
+    // used `start`, which top-aligned a 12px label with 14px title).
+    final tagStyle = KeenaiTypographyBody.body12Regular
+        .copyWith(
+      color: KeenaiColorsText.muted,
+      height: KeenaiTypographyBody.body14Medium.height,
     );
 
-    if (trailing == DsAssetListItemTrailing.single) {
-      return Row(
-        children: [
-          Expanded(child: titleText),
-          const SizedBox(width: 6),
-          tag,
-        ],
-      );
-    }
-
     return Row(
-      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.alphabetic,
+      mainAxisSize: MainAxisSize.max,
       children: [
-        titleText,
-        const SizedBox(width: 6),
-        tag,
+        Flexible(
+          flex: 1,
+          fit: FlexFit.loose,
+          child: titleText,
+        ),
+        const SizedBox(width: KeenaiSpacing.space6),
+        Text('\u00B7', style: tagStyle),
+        const SizedBox(width: KeenaiSpacing.space6),
+        Text(assetTagLabel, style: tagStyle),
       ],
     );
   }
@@ -181,13 +177,19 @@ class _TitleRow extends StatelessWidget {
 class _MetaRow extends StatelessWidget {
   const _MetaRow({
     required this.showOrderType,
-    required this.showStatusPill,
+    required this.showOrderStatus,
+    required this.orderTypeLabel,
+    required this.orderTypeTone,
+    required this.orderStatus,
     required this.showValue,
     required this.valueText,
   });
 
   final bool showOrderType;
-  final bool showStatusPill;
+  final bool showOrderStatus;
+  final String orderTypeLabel;
+  final DsStatusPillTone orderTypeTone;
+  final String orderStatus;
   final bool showValue;
   final String? valueText;
 
@@ -197,25 +199,26 @@ class _MetaRow extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (showOrderType) ...[
-          const DsStatusPill(
-            label: 'S',
+          DsStatusPill(
+            label: orderTypeLabel,
             size: DsStatusPillSize.sm,
-            tone: DsStatusPillTone.danger,
+            tone: orderTypeTone,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: KeenaiSpacing.space8),
         ],
-        if (showStatusPill) ...[
-          const DsStatusPill(
-            label: 'FAILED',
+        if (showOrderStatus) ...[
+          DsStatusPill(
+            label: orderStatus,
             size: DsStatusPillSize.sm,
             tone: DsStatusPillTone.neutral,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: KeenaiSpacing.space8),
         ],
         if (showValue && (valueText?.isNotEmpty ?? false))
           Text(
             valueText!,
-            style: DsTypography.assetListMetaMuted,
+            style: KeenaiTypographyBody.body12Medium
+                .copyWith(color: KeenaiColorsText.muted),
           ),
       ],
     );
@@ -257,30 +260,34 @@ class _TrailingBlock extends StatelessWidget {
                     children: [
                       Text(
                         trailingPrimaryValue,
-                        style: DsTypography.assetListValueBold,
+                        style: KeenaiTypographyBody.body14Semibold
+                            .copyWith(color: KeenaiColorsText.main),
                       ),
-                      const SizedBox(width: 4),
+                      const SizedBox(width: KeenaiSpacing.space4),
                       Text(
                         trailingCurrency,
-                        style: DsTypography.assetListCurrency,
+                        style: KeenaiTypographyBody.body10Semibold
+                            .copyWith(color: KeenaiColorsText.muted),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: KeenaiSpacing.space4),
                   Text(
                     trailingSecondaryValue,
-                    style: DsTypography.assetListBodyMuted,
+                    style: KeenaiTypographyBody.body12Regular
+                        .copyWith(color: KeenaiColorsText.muted),
                   ),
                 ]
               : [
                   Text(
                     trailingSingleLine,
-                    style: DsTypography.assetListValueBold,
+                    style: KeenaiTypographyBody.body14Semibold
+                        .copyWith(color: KeenaiColorsText.main),
                   ),
                 ],
         ),
         if (showChevron) ...[
-          const SizedBox(width: 8),
+          const SizedBox(width: KeenaiSpacing.space8),
           const _DsChevronRight(),
         ],
       ],
@@ -295,8 +302,8 @@ class _DsChevronRight extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      size: const Size(20, 20),
-      painter: _ChevronRightPainter(color: DsColors.textMuted),
+      size: const Size.square(KeenaiSpacing.space20),
+      painter: _ChevronRightPainter(color: KeenaiColorsText.muted),
     );
   }
 }

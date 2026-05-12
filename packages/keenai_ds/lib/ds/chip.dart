@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' show Icon, Icons;
 import 'package:flutter/widgets.dart';
 
-import 'tokens.dart';
+import '../tokens/tokens.dart';
 
 /// Visual variant for [DsChip] — Figma node `47:2` (Chips).
 enum DsChipVariant {
@@ -31,29 +31,34 @@ class DsChip extends StatelessWidget {
   final DsChipVariant variant;
   final bool showLeadingIcon;
 
-  static const double _iconSize = 16;
-  static const double _gap = 4;
+  static const double _iconSize = KeenaiSpacing.space16;
+  static const double _gap = KeenaiSpacing.space4;
 
-  EdgeInsets get _padding =>
-      const EdgeInsets.symmetric(horizontal: 8, vertical: 6);
+  EdgeInsets get _padding => const EdgeInsets.symmetric(
+        horizontal: KeenaiSpacing.space8,
+        vertical: KeenaiSpacing.space6,
+      );
 
   @override
   Widget build(BuildContext context) {
     final (Color bg, Color? border, TextStyle textStyle) = switch (variant) {
       DsChipVariant.selected => (
-          DsColors.textMain,
+          KeenaiColorsText.main,
           null,
-          DsTypography.chipLabelMedium.copyWith(color: DsColors.surfaceWhite),
+          KeenaiTypographyBody.body12Medium
+              .copyWith(color: KeenaiColorsSurface.white),
         ),
       DsChipVariant.outlined => (
-          DsColors.surfaceWhite,
-          DsColors.borderLight,
-          DsTypography.chipLabelRegular.copyWith(color: DsColors.textMuted),
+          KeenaiColorsSurface.white,
+          KeenaiColorsBorder.light,
+          KeenaiTypographyBody.body12Regular
+              .copyWith(color: KeenaiColorsText.muted),
         ),
       DsChipVariant.multiSelect => (
-          DsColors.surfaceBg,
-          DsColors.borderStrong,
-          DsTypography.chipLabelMedium.copyWith(color: DsColors.textMain),
+          KeenaiColorsSurface.bg,
+          KeenaiColorsBorder.strong,
+          KeenaiTypographyBody.body12Medium
+              .copyWith(color: KeenaiColorsText.main),
         ),
     };
 
@@ -64,7 +69,7 @@ class DsChip extends StatelessWidget {
         Icon(
           Icons.expand_more_rounded,
           size: _iconSize,
-          color: DsColors.textMuted,
+          color: KeenaiColorsText.muted,
         ),
         const SizedBox(width: _gap),
       ]);
@@ -73,7 +78,7 @@ class DsChip extends StatelessWidget {
         Icon(
           Icons.check_rounded,
           size: _iconSize,
-          color: DsColors.textMain,
+          color: KeenaiColorsText.main,
         ),
         const SizedBox(width: _gap),
       ]);
@@ -91,7 +96,7 @@ class DsChip extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: bg,
-        borderRadius: BorderRadius.circular(1000),
+        borderRadius: BorderRadius.circular(KeenaiRadius.radius1000),
         border: border != null
             ? Border.all(color: border, width: 1)
             : null,
