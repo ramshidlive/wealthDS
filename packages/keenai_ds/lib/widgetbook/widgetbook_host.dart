@@ -10,6 +10,7 @@ void runKeenaiWidgetbook() {
 }
 
 @App()
+/// Widgetbook shell for the design system (see [runKeenaiWidgetbook]).
 class KeenaiWidgetbookApp extends StatelessWidget {
   const KeenaiWidgetbookApp({super.key});
 
@@ -17,6 +18,11 @@ class KeenaiWidgetbookApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook.material(
       directories: directories,
+      // https://docs.widgetbook.io/addons/inspector-addon — [InspectorAddon] is from
+      // `package:widgetbook` (uses `inspector`); enable in the Addons panel.
+      addons: [
+        InspectorAddon(),
+      ],
     );
   }
 }

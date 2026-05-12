@@ -17,16 +17,24 @@ enum DsInfoBannerTone {
 class DsInfoBanner extends StatelessWidget {
   const DsInfoBanner({
     super.key,
+    /// Typography: KeenaiTypographyBody.body14Regular (applied in [build] for message)
     required this.message,
+    /// Color: KeenaiColorsSurface / KeenaiColorsBorder / KeenaiColorsBanner / KeenaiColorsText (via [tone] → [_palette])
     this.tone = DsInfoBannerTone.info,
   });
 
+  /// Typography: KeenaiTypographyBody.body14Regular
   final String message;
+  /// Color: KeenaiColorsSurface.card | KeenaiColorsBanner.* | KeenaiColorsBorder.* | KeenaiColorsText.*
   final DsInfoBannerTone tone;
 
+  /// Spacing: KeenaiSpacing.space16
   static const double _iconSize = KeenaiSpacing.space16;
+  /// Spacing: KeenaiSpacing.space8
   static const double _gap = KeenaiSpacing.space8;
+  /// Spacing: KeenaiSpacing.space12
   static const EdgeInsets _padding = EdgeInsets.all(KeenaiSpacing.space12);
+  /// Radius: KeenaiRadius.radius12
   static const double _radius = KeenaiRadius.radius12;
 
   (Color bg, Color border, Color foreground) get _palette {
