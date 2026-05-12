@@ -1,2 +1,1 @@
-// Public entrypoint for StatusPill (implementation lives in `lib/ds/`).
-export 'package:my_design_system/ds/status_pill.dart';
+export 'package:keenai_ds/components/status_pill.dart';

@@ -33,6 +33,7 @@ jobs:
 
       - name: Generate Widgetbook metadata
         run: dart run build_runner build -d
+        working-directory: packages/keenai_ds
 
       - name: Build Widgetbook for web
         run: flutter build web -t lib/main.widgetbook.dart

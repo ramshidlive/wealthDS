@@ -24,8 +24,11 @@ if [[ -z "${WIDGETBOOK_API_KEY:-}" ]]; then
   exit 1
 fi
 
-echo ">> dart run build_runner build -d"
-dart run build_runner build -d
+echo ">> (packages/keenai_ds) dart run build_runner build -d"
+(
+  cd "$ROOT/packages/keenai_ds"
+  dart run build_runner build -d
+)
 
 echo ">> flutter build web -t lib/main.widgetbook.dart"
 flutter build web -t lib/main.widgetbook.dart

@@ -10,12 +10,14 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:my_design_system/components/asset_list_item.widgetbook.dart'
-    as _my_design_system_components_asset_list_item_widgetbook;
-import 'package:my_design_system/components/stat_box.widgetbook.dart'
-    as _my_design_system_components_stat_box_widgetbook;
-import 'package:my_design_system/components/status_pill.widgetbook.dart'
-    as _my_design_system_components_status_pill_widgetbook;
+import 'package:keenai_ds/components/asset_list_item.widgetbook.dart'
+    as _keenai_ds_components_asset_list_item_widgetbook;
+import 'package:keenai_ds/components/chip.widgetbook.dart'
+    as _keenai_ds_components_chip_widgetbook;
+import 'package:keenai_ds/components/stat_box.widgetbook.dart'
+    as _keenai_ds_components_stat_box_widgetbook;
+import 'package:keenai_ds/components/status_pill.widgetbook.dart'
+    as _keenai_ds_components_status_pill_widgetbook;
 import 'package:widgetbook/widgetbook.dart' as _widgetbook;
 
 final directories = <_widgetbook.WidgetbookNode>[
@@ -30,8 +32,22 @@ final directories = <_widgetbook.WidgetbookNode>[
             useCases: [
               _widgetbook.WidgetbookUseCase(
                 name: 'Playground',
-                builder: _my_design_system_components_asset_list_item_widgetbook
+                builder: _keenai_ds_components_asset_list_item_widgetbook
                     .dsAssetListItemPlayground,
+              ),
+            ],
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookFolder(
+        name: 'DsChip',
+        children: [
+          _widgetbook.WidgetbookComponent(
+            name: 'DsChip',
+            useCases: [
+              _widgetbook.WidgetbookUseCase(
+                name: 'Playground',
+                builder: _keenai_ds_components_chip_widgetbook.dsChipPlayground,
               ),
             ],
           ),
@@ -45,7 +61,7 @@ final directories = <_widgetbook.WidgetbookNode>[
             useCases: [
               _widgetbook.WidgetbookUseCase(
                 name: 'Playground',
-                builder: _my_design_system_components_stat_box_widgetbook
+                builder: _keenai_ds_components_stat_box_widgetbook
                     .dsStatBoxPlayground,
               ),
             ],
@@ -60,7 +76,7 @@ final directories = <_widgetbook.WidgetbookNode>[
             useCases: [
               _widgetbook.WidgetbookUseCase(
                 name: 'Playground',
-                builder: _my_design_system_components_status_pill_widgetbook
+                builder: _keenai_ds_components_status_pill_widgetbook
                     .dsStatusPillPlayground,
               ),
             ],
