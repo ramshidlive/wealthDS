@@ -1,0 +1,54 @@
+name: Widgetbook Cloud
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: widgetbook-cloud-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Enable web
+        run: flutter config --enable-web
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate Widgetbook metadata
+        run: dart run build_runner build -d
+
+      - name: Build Widgetbook for web
+        run: flutter build web -t lib/main.widgetbook.dart
+
+      - name: Publish to Widgetbook Cloud
+        env:
+          WIDGETBOOK_API_KEY: ${{ secrets.WIDGETBOOK_API_KEY }}
+        run: |
+          if [ -z "$WIDGETBOOK_API_KEY" ]; then
+            echo "Missing GitHub secret WIDGETBOOK_API_KEY"
+            exit 1
+          fi
+          dart run widgetbook_cli:widgetbook cloud build push \
+            --api-key "$WIDGETBOOK_API_KEY" \
+            --path "${{ github.workspace }}" \
+            --repository "${{ github.repository }}" \
+            --branch "${{ github.ref_name }}" \
+            --commit "${{ github.sha }}" \
+            --actor "${{ github.actor }}"
