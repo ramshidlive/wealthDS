@@ -14,6 +14,8 @@ import 'package:keenai_ds/components/asset_list_item.widgetbook.dart'
     as _keenai_ds_components_asset_list_item_widgetbook;
 import 'package:keenai_ds/components/chip.widgetbook.dart'
     as _keenai_ds_components_chip_widgetbook;
+import 'package:keenai_ds/components/info_banner.widgetbook.dart'
+    as _keenai_ds_components_info_banner_widgetbook;
 import 'package:keenai_ds/components/stat_box.widgetbook.dart'
     as _keenai_ds_components_stat_box_widgetbook;
 import 'package:keenai_ds/components/status_pill.widgetbook.dart'
@@ -48,6 +50,21 @@ final directories = <_widgetbook.WidgetbookNode>[
               _widgetbook.WidgetbookUseCase(
                 name: 'Playground',
                 builder: _keenai_ds_components_chip_widgetbook.dsChipPlayground,
+              ),
+            ],
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookFolder(
+        name: 'DsInfoBanner',
+        children: [
+          _widgetbook.WidgetbookComponent(
+            name: 'DsInfoBanner',
+            useCases: [
+              _widgetbook.WidgetbookUseCase(
+                name: 'Playground',
+                builder: _keenai_ds_components_info_banner_widgetbook
+                    .dsInfoBannerPlayground,
               ),
             ],
           ),

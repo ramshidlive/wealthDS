@@ -19,6 +19,20 @@ abstract final class DsColors {
   static const Color borderStrong = Color(0xFFCED1D9);
 
   static const Color surfaceWhite = Color(0xFFFFFFFF);
+
+  // InfoBanner (Figma `10:22`).
+  static const Color bannerInfoBg = Color(0xFFFAFBFC);
+  static const Color bannerWarningBg = Color(0xFFFFF8EC);
+  static const Color bannerSuccessBg = Color(0xFFEFFBF6);
+  static const Color bannerDangerBg = Color(0xFFFFF4F6);
+
+  static const Color bannerWarningBorder = Color(0xFFF2D49F);
+  static const Color bannerSuccessBorder = Color(0xFFBCE8DA);
+  static const Color bannerDangerBorder = Color(0xFFF6C8D1);
+
+  static const Color bannerWarningText = Color(0xFF9A6506);
+  static const Color bannerSuccessText = Color(0xFF0F7E63);
+  static const Color bannerDangerText = Color(0xFFB8132D);
 }
 
 abstract final class DsTypography {
@@ -128,5 +142,14 @@ abstract final class DsTypography {
         height: 14 / 10,
         fontWeight: FontWeight.w600,
         color: DsColors.textMuted,
+      );
+
+  /// InfoBanner — Body/14 Regular (Figma `10:22`).
+  static TextStyle infoBannerBody(Color color) => TextStyle(
+        fontSize: 14,
+        height: 20 / 14,
+        fontWeight: FontWeight.w400,
+        color: color,
+        letterSpacing: -0.196,
       );
 }
