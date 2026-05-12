@@ -24,11 +24,24 @@ if [[ -z "${WIDGETBOOK_API_KEY:-}" ]]; then
   exit 1
 fi
 
+echo ">> flutter pub get (root)"
+flutter pub get
+
+echo ">> flutter pub get (packages/keenai_ds)"
+(
+  cd "$ROOT/packages/keenai_ds"
+  flutter pub get
+)
+
 echo ">> (packages/keenai_ds) dart run build_runner build -d"
 (
   cd "$ROOT/packages/keenai_ds"
   dart run build_runner build -d
 )
+
+echo ">> sync Widgetbook cache to root .dart_tool (widgetbook_cli --path)"
+mkdir -p "$ROOT/.dart_tool/build/generated"
+cp -R "$ROOT/packages/keenai_ds/.dart_tool/build/generated/." "$ROOT/.dart_tool/build/generated/"
 
 echo ">> flutter build web -t lib/main.widgetbook.dart"
 flutter build web -t lib/main.widgetbook.dart

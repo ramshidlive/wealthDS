@@ -15,6 +15,9 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,12 +31,24 @@ jobs:
       - name: Enable web
         run: flutter config --enable-web
 
-      - name: Install dependencies
+      - name: Install dependencies (root)
         run: flutter pub get
+
+      - name: Install dependencies (keenai_ds)
+        run: flutter pub get
+        working-directory: packages/keenai_ds
 
       - name: Generate Widgetbook metadata
         run: dart run build_runner build -d
         working-directory: packages/keenai_ds
+
+      # widgetbook_cli reads `.dart_tool/build/generated/**` under `--path`
+      # (repo root). Codegen runs in the path package, so merge its output here
+      # or `cloud build push` exits 21 (no cache files).
+      - name: Sync Widgetbook cache to root
+        run: |
+          mkdir -p .dart_tool/build/generated
+          cp -R packages/keenai_ds/.dart_tool/build/generated/. .dart_tool/build/generated/
 
       - name: Build Widgetbook for web
         run: flutter build web -t lib/main.widgetbook.dart
