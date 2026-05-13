@@ -26,9 +26,31 @@ import 'package:keenai_ds/components/stat_box.widgetbook.dart'
     as _keenai_ds_components_stat_box_widgetbook;
 import 'package:keenai_ds/components/status_pill.widgetbook.dart'
     as _keenai_ds_components_status_pill_widgetbook;
+import 'package:keenai_ds/components/tile_leading.widgetbook.dart'
+    as _keenai_ds_components_tile_leading_widgetbook;
 import 'package:widgetbook/widgetbook.dart' as _widgetbook;
 
 final directories = <_widgetbook.WidgetbookNode>[
+  _widgetbook.WidgetbookCategory(
+    name: 'Atoms',
+    children: [
+      _widgetbook.WidgetbookFolder(
+        name: 'TileLeading',
+        children: [
+          _widgetbook.WidgetbookComponent(
+            name: 'TileLeading',
+            useCases: [
+              _widgetbook.WidgetbookUseCase(
+                name: 'Playground',
+                builder: _keenai_ds_components_tile_leading_widgetbook
+                    .tileLeadingPlayground,
+              ),
+            ],
+          ),
+        ],
+      ),
+    ],
+  ),
   _widgetbook.WidgetbookCategory(
     name: 'Components',
     children: [
