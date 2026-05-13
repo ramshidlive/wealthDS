@@ -1,0 +1,22 @@
+name: web_showcase
+description: KeenAI design system browsable web showcase.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.11.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+  inspector: ^4.0.0
+  keenai_ds:
+    path: ../packages/keenai_ds
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

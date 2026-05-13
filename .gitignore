@@ -33,6 +33,9 @@ migrate_working_dir/
 /build/
 /coverage/
 
+# keenai_ds web showcase — `flutter run` / `flutter build` output (not source)
+web_showcase/build/
+
 # Symbolication related
 app.*.symbols
 
